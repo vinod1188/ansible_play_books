@@ -1,0 +1,35 @@
+---
+- hosts: durga
+  become: yes
+  tasks:
+
+   - name: Task for PV and VG
+     lvg:
+      vg: test_vg
+      pvs: 
+        - /dev/sdb1
+        - /dev/sdb2
+   
+   - name: Logical volume with 1GB size
+     lvol: 
+       vg: test_vg
+       lv: test_lv
+       size: 4G
+
+   - name: Format the volume with ext4 fs
+     filesystem:
+       fstype: ext4
+       dev: /dev/test_vg/test_lv
+  
+   - name: create a directory for mount
+     file:
+      path: /mnt/test_mount
+      state: directory
+
+   - name: mounting lvm on the test_mount
+     mount:
+       src: /dev/test_vg/test_lv
+       path: /mnt/test_mount
+       fstype: ext4
+       state: mounted
+   

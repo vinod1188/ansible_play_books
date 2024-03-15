@@ -1,0 +1,12 @@
+- hosts: test2
+  become: yes
+  tasks: 
+  
+   - name: installing git 
+     yum:
+      name: git
+      state: installed 
+
+   - name: cheking wether git is installed or not
+     shell:
+      cmd: rpm -qa | grep -i git

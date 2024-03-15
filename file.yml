@@ -1,0 +1,15 @@
+- hosts: all
+  become: yes
+  tasks:
+
+  
+   - name: create a dir
+     file:
+      path: /vagrant/test
+      state: directory 
+  
+   - name: creating multiples files
+     file:
+      path: /vagrant/test/file{1..10}.txt
+      state: touch
+ 

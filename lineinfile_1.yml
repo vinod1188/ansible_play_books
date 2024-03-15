@@ -1,0 +1,12 @@
+---
+ - hosts: durga
+   become: yes
+   tasks: 
+   
+   
+     - name: adding mount detials to fstab
+       blockinfile:
+         path: /etc/fstab
+         block: |
+            /dev/sdc	/mnt	ext4	default	0 0
+         

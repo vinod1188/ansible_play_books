@@ -1,0 +1,20 @@
+- hosts: durga
+  become: yes
+  tasks:
+
+   - name: Create a new primary partition for LVM
+     parted:
+       device: /dev/sdb
+       number: 1
+       flags: [ lvm ]
+       state: present
+       part_end: 4GiB
+
+   - name: Create a new primary partition for LVM
+     parted:
+       device: /dev/sdb
+       number: 2
+       flags: [ lvm ]
+       state: present
+       part_end: 4GiB
+

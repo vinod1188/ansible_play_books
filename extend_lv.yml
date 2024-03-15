@@ -1,0 +1,12 @@
+---
+ - hosts: durga
+   become: yes
+   tasks: 
+  
+     - name: extending the lvm
+       lvol:
+         vg: test_vg
+         lv: test_lv
+         size: +1g
+         resizefs: true
+

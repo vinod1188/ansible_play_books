@@ -1,0 +1,14 @@
+---
+- hosts: durga
+  become: yes
+  tasks:
+
+   - name: using loop items
+     user:
+       name: "{{ item }}"
+       state: present
+     with_items:
+       - user1
+       - user2
+       - user3
+       - user4

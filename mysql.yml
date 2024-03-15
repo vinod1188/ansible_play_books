@@ -1,0 +1,63 @@
+---
+- hosts: durga
+  become: yes
+  tasks: 
+   
+   
+    - name: Download sources
+      get_url:
+        url: 
+        dest: /opt/mysql 
+    
+    - name: Install package
+      yum:
+        name: /opt/mysql/mysql-community-release-el7-5.noarch.rpm
+        state: present
+
+    
+    - name: installing mysql in centos
+      yum:
+        name: "{{ item }}"
+      with_items:
+        - mysql-server
+        - python-mysqldb
+        - mysql-client
+      become: yes
+    
+    - name: start and enable mysql
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+    
+    - name: create a db user with full pervilages
+      mysql_user:
+        name: "{{ db_user }}"
+        password: "{{ db_pass }}"
+        perv: '*.*:ALL'
+        host: '%'
+        state: present
+    
+    - name: create a database
+      mysql_db: 
+        name: "{{ db_name }}"
+        state: present
+         
+
+    - name: add remote host deatials to my.cnf
+      blockinfile:
+        path: /etc/my.cnf
+        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+        block: " bind-address = * "
+      notify:
+       restart: mysql
+
+  handlers:
+    - name: Restart mysql
+      service:
+        name: mysql
+        state: restarted
+      
+    
+
+      

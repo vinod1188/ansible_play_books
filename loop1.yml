@@ -1,0 +1,23 @@
+---
+- hosts: durga
+  become: yes
+  tasks: 
+    - name: install updates
+      yum: update_cache=yes
+      when: ansible_os_family == "centos"
+
+    - name: installing multiple packages
+      yum:
+        name: "{{ item }}" 
+        state: latest
+      with_items:
+        - httpd
+    
+    - name: start httpd
+      service: 
+        name: "{{ item }}" 
+        state: started
+      with_items:
+        - httpd
+
+

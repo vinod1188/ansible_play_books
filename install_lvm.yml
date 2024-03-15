@@ -1,0 +1,11 @@
+---
+ - hosts: durga
+   become: yes
+   tasks: 
+
+    - name: install lvm 
+      yum:
+        update_cache: yes
+        name: lvm2
+        state: present
+

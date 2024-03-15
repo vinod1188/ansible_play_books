@@ -1,0 +1,11 @@
+---
+ - hosts: durga
+   become: yes
+   tasks:
+
+    - name: adding host detials to host file
+      blockinfile:
+        path: /etc/hosts
+        block: |
+           10.10.1.10  work-1
+           10.10.1.11  work-2
